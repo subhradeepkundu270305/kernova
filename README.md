@@ -156,7 +156,7 @@ If you want to contribute or build KERNOVA from source:
 ### Setup Instructions
 ```bash
 # Clone the repository
-git clone https://github.com/subhradeep/kernova.git
+git clone https://github.com/subhradeepkundu270305/kernova.git
 cd kernova
 
 # Install dependencies

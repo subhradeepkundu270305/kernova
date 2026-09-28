@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "KERNOVA — Offline AI Code Editor. Code locally. Think intelligently.",
   "main": "./out/main/index.js",
-  "homepage": "https://github.com/subhradeep/kernova",
-  "author": "Subhradeep",
+  "homepage": "https://github.com/subhradeepkundu270305/kernova",
+  "author": "Subhradeep Kundu",
   "license": "MIT",
   "scripts": {
     "dev": "electron-vite dev",
