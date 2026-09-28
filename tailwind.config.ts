@@ -5,18 +5,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-base': '#0A0A0F',
-        'bg-surface-1': '#111118',
-        'bg-surface-2': '#16161E',
-        'bg-surface-3': '#1E1E2A',
+        'bg-base': 'var(--bg-base)',
+        'bg-surface-1': 'var(--bg-surface-1)',
+        'bg-surface-2': 'var(--bg-surface-2)',
+        'bg-surface-3': 'var(--bg-surface-3)',
         border: {
-          DEFAULT: '#2A2A3A',
+          DEFAULT: 'var(--border-color)',
         },
-        'text-primary': '#E4E4E7',
-        'text-secondary': '#A1A1AA',
-        'text-muted': '#71717A',
-        'accent-violet': '#8B5CF6',
-        'accent-cyan': '#06B6D4',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-muted': 'var(--text-muted)',
+        'accent-violet': 'var(--color-primary)',
+        'accent-cyan': 'var(--color-secondary)',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],

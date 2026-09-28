@@ -24,10 +24,8 @@ import { useAIStore } from './stores/aiStore'
 import { useTerminalStore } from './stores/terminalStore'
 
 import { Files, Search, Terminal as TerminalIcon, Sparkles } from 'lucide-react'
-
-import { themeData as midnightTheme } from './themes/midnight'
-import { themeData as auroraTheme } from './themes/aurora'
-import { themeData as emberTheme } from './themes/ember'
+import { registerMonacoThemes } from './themes'
+import { useSettingsStore } from './stores/settingsStore'
 
 const App: React.FC = () => {
   const { isRestoring } = useSessionRestore()
@@ -60,15 +58,24 @@ const App: React.FC = () => {
   const { rootPath } = useFileTreeStore()
   const { checkOllama } = useAIStore()
 
+  const { loadSettings, editorTheme } = useSettingsStore()
   const [isDragging, setIsDragging] = useState(false)
 
-  // Register Monaco themes on mount
+  // Register Monaco themes and load persisted preferences on mount
   useEffect(() => {
-    monaco.editor.defineTheme('midnight', midnightTheme)
-    monaco.editor.defineTheme('aurora', auroraTheme)
-    monaco.editor.defineTheme('ember', emberTheme)
+    registerMonacoThemes(monaco)
+    loadSettings()
     checkOllama()
-  }, [checkOllama])
+  }, [checkOllama, loadSettings])
+
+  // Sync Monaco editor theme whenever it changes
+  useEffect(() => {
+    try {
+      monaco.editor.setTheme(editorTheme)
+    } catch {
+      // Ignore if editor not ready
+    }
+  }, [editorTheme])
 
   // Global keybindings
   useEffect(() => {
@@ -310,9 +317,14 @@ const App: React.FC = () => {
               }}
               className={`p-2 rounded-lg transition-colors ${
                 isSidebarOpen && sidebarTab === 'files'
-                  ? 'text-[#8B5CF6] bg-[#8B5CF6]/15'
+                  ? 'text-white'
                   : 'text-[#71717A] hover:text-[#A1A1AA] hover:bg-[#1E1E2A]'
               }`}
+              style={
+                isSidebarOpen && sidebarTab === 'files'
+                  ? { color: 'var(--color-primary)', backgroundColor: 'var(--color-primary-glow)' }
+                  : undefined
+              }
               title="Explorer (Ctrl+B)"
             >
               <Files size={18} />
@@ -328,9 +340,14 @@ const App: React.FC = () => {
               }}
               className={`p-2 rounded-lg transition-colors ${
                 isSidebarOpen && sidebarTab === 'search'
-                  ? 'text-[#8B5CF6] bg-[#8B5CF6]/15'
+                  ? 'text-white'
                   : 'text-[#71717A] hover:text-[#A1A1AA] hover:bg-[#1E1E2A]'
               }`}
+              style={
+                isSidebarOpen && sidebarTab === 'search'
+                  ? { color: 'var(--color-primary)', backgroundColor: 'var(--color-primary-glow)' }
+                  : undefined
+              }
               title="Search (Ctrl+Shift+F)"
             >
               <Search size={18} />
@@ -340,7 +357,8 @@ const App: React.FC = () => {
 
             <button
               onClick={toggleAIChat}
-              className="p-2 text-[#8B5CF6] hover:text-[#A78BFA] hover:bg-[#8B5CF6]/15 rounded-lg transition-colors"
+              className="p-2 hover:opacity-90 rounded-lg transition-colors"
+              style={{ color: 'var(--color-primary)' }}
               title="AI Assistant (Ctrl+Shift+I)"
             >
               <Sparkles size={18} />
@@ -366,10 +384,16 @@ const App: React.FC = () => {
 
             {/* Drag resize handle */}
             <div
-              className="absolute top-0 right-0 w-[4px] h-full cursor-col-resize hover:bg-[#8B5CF6]/50 z-20 transition-colors"
+              className="absolute top-0 right-0 w-[4px] h-full cursor-col-resize z-20 transition-colors hover:opacity-80"
+              style={{ backgroundColor: isDragging ? 'var(--color-primary)' : undefined }}
               onMouseDown={handleMouseDown}
             >
-              {isDragging && <div className="absolute top-0 left-0 w-full h-full bg-[#8B5CF6]" />}
+              {isDragging && (
+                <div
+                  className="absolute top-0 left-0 w-full h-full"
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                />
+              )}
             </div>
           </div>
         )}

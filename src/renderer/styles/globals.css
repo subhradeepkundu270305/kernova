@@ -9,19 +9,23 @@
     --bg-surface-2: #16161E;
     --bg-surface-3: #1E1E2A;
     --border-color: #2A2A3A;
-    
+
     --text-primary: #E4E4E7;
     --text-secondary: #A1A1AA;
     --text-muted: #71717A;
-    
-    --accent-violet: #8B5CF6;
-    --accent-cyan: #06B6D4;
+
+    --color-primary: #8B5CF6;
+    --color-secondary: #06B6D4;
+    --color-primary-glow: rgba(139, 92, 246, 0.35);
+    --accent-violet: var(--color-primary);
+    --accent-cyan: var(--color-secondary);
   }
-  
+
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
@@ -31,12 +35,12 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }
-  
+
   .text-gradient {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(to right, var(--accent-violet), var(--accent-cyan));
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary));
   }
 }
 

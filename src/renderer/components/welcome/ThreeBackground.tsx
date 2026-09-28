@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { useSettingsStore } from '../../stores/settingsStore'
+import { THEMES } from '../../themes'
 
 export const ThreeBackground: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { reduceEffects } = useSettingsStore()
+  const { reduceEffects, editorTheme } = useSettingsStore()
 
   useEffect(() => {
     if (reduceEffects || !containerRef.current) return
@@ -12,6 +13,8 @@ export const ThreeBackground: React.FC = () => {
     const container = containerRef.current
     let width = container.clientWidth
     let height = container.clientHeight
+
+    const currentTheme = THEMES[editorTheme] || THEMES.midnight
 
     // Scene & Camera
     const scene = new THREE.Scene()
@@ -34,15 +37,15 @@ export const ThreeBackground: React.FC = () => {
     const positions = new Float32Array(particleCount * 3)
     const colors = new Float32Array(particleCount * 3)
 
-    const colorViolet = new THREE.Color('#8B5CF6')
-    const colorCyan = new THREE.Color('#06B6D4')
+    const colorPrimary = new THREE.Color(currentTheme.primary)
+    const colorSecondary = new THREE.Color(currentTheme.secondary)
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 160
       positions[i * 3 + 1] = (Math.random() - 0.5) * 120
       positions[i * 3 + 2] = (Math.random() - 0.5) * 80
 
-      const mixedColor = colorViolet.clone().lerp(colorCyan, Math.random())
+      const mixedColor = colorPrimary.clone().lerp(colorSecondary, Math.random())
       colors[i * 3] = mixedColor.r
       colors[i * 3 + 1] = mixedColor.g
       colors[i * 3 + 2] = mixedColor.b
@@ -66,10 +69,10 @@ export const ThreeBackground: React.FC = () => {
     // Wireframe geometric polyhedron core
     const coreGeo = new THREE.IcosahedronGeometry(22, 1)
     const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x8b5cf6,
+      color: new THREE.Color(currentTheme.primary),
       wireframe: true,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.18,
     })
     const coreMesh = new THREE.Mesh(coreGeo, coreMat)
     scene.add(coreMesh)
@@ -130,7 +133,7 @@ export const ThreeBackground: React.FC = () => {
         renderer.domElement.parentNode.removeChild(renderer.domElement)
       }
     }
-  }, [reduceEffects])
+  }, [reduceEffects, editorTheme])
 
   if (reduceEffects) return null
 

@@ -5,6 +5,7 @@ import * as monaco from 'monaco-editor'
 import { useSettingsStore } from '../../stores/settingsStore'
 import { registerInlineCompletionProvider } from './inlineCompletion'
 import { SELECTION_ACTIONS, triggerSelectionAction } from '../ai/SelectionActions'
+import { registerMonacoThemes } from '../../themes'
 
 interface MonacoEditorProps {
   filePath: string
@@ -35,8 +36,19 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     }
   }, [])
 
+  // Explicitly apply theme on Monaco when editorTheme changes
+  useEffect(() => {
+    try {
+      monaco.editor.setTheme(editorTheme)
+    } catch {
+      // Ignore if editor not ready
+    }
+  }, [editorTheme])
+
   const handleEditorMount: OnMount = (editor, monacoInstance) => {
     editorRef.current = editor
+    registerMonacoThemes(monacoInstance)
+    monacoInstance.editor.setTheme(editorTheme)
 
     editor.onDidChangeModelContent(() => {
       onChange?.(editor.getValue())
@@ -90,6 +102,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
         theme={editorTheme}
         value={content}
         path={filePath}
+        beforeMount={registerMonacoThemes}
         onMount={handleEditorMount}
         loading={
           <div className="absolute inset-0 flex items-center justify-center bg-transparent">

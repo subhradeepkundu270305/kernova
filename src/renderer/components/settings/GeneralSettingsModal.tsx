@@ -86,14 +86,18 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                     onClick={() => updateSetting('editorTheme', th.id as EditorThemeName)}
                     className={`p-3 rounded-xl border text-left flex flex-col justify-between h-24 transition-all relative overflow-hidden ${
                       editorTheme === th.id
-                        ? 'border-[#8B5CF6] ring-1 ring-[#8B5CF6]'
+                        ? 'ring-2'
                         : 'border-[#2A2A3A] hover:border-[#3F3F5A]'
                     }`}
-                    style={{ backgroundColor: th.bg }}
+                    style={{
+                      backgroundColor: th.bg,
+                      borderColor: editorTheme === th.id ? th.accent : undefined,
+                      boxShadow: editorTheme === th.id ? `0 0 16px ${th.accent}40` : undefined,
+                    }}
                   >
                     <div>
                       <div className="font-bold text-white text-xs">{th.label}</div>
-                      <div className="text-[10px] text-[#71717A] mt-0.5">{th.text}</div>
+                      <div className="text-[10px] text-[#A1A1AA] mt-0.5">{th.text}</div>
                     </div>
 
                     <div className="flex items-center gap-1.5 mt-2">
@@ -105,7 +109,10 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                     </div>
 
                     {editorTheme === th.id && (
-                      <span className="absolute top-2 right-2 p-1 rounded-full bg-[#8B5CF6] text-white">
+                      <span
+                        className="absolute top-2 right-2 p-1 rounded-full text-white"
+                        style={{ backgroundColor: th.accent }}
+                      >
                         <Check size={10} />
                       </span>
                     )}
@@ -145,7 +152,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                     max={22}
                     value={fontSize}
                     onChange={(e) => updateSetting('fontSize', Number(e.target.value))}
-                    className="w-full accent-[#8B5CF6] cursor-pointer"
+                    className="w-full cursor-pointer"
+                    style={{ accentColor: 'var(--color-primary)' }}
                   />
                 </div>
               </div>
@@ -158,7 +166,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                   type="checkbox"
                   checked={fontLigatures}
                   onChange={(e) => updateSetting('fontLigatures', e.target.checked)}
-                  className="w-4 h-4 accent-[#8B5CF6] cursor-pointer"
+                  className="w-4 h-4 cursor-pointer"
+                  style={{ accentColor: 'var(--color-primary)' }}
                 />
               </div>
             </div>
@@ -182,7 +191,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                     type="checkbox"
                     checked={autoSave}
                     onChange={(e) => updateSetting('autoSave', e.target.checked)}
-                    className="w-4 h-4 accent-[#8B5CF6] cursor-pointer"
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: 'var(--color-primary)' }}
                   />
                 </div>
 
@@ -215,7 +225,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                     type="checkbox"
                     checked={minimap}
                     onChange={(e) => updateSetting('minimap', e.target.checked)}
-                    className="w-4 h-4 accent-[#8B5CF6] cursor-pointer"
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: 'var(--color-primary)' }}
                   />
                 </div>
 
@@ -255,7 +266,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                   type="checkbox"
                   checked={reduceEffects}
                   onChange={(e) => updateSetting('reduceEffects', e.target.checked)}
-                  className="w-4 h-4 accent-[#8B5CF6] cursor-pointer"
+                  className="w-4 h-4 cursor-pointer"
+                  style={{ accentColor: 'var(--color-primary)' }}
                 />
               </div>
             </div>
@@ -265,7 +277,8 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
           <div className="px-6 py-3 bg-[#16161E] border-t border-[#2A2A3A] flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-1.5 rounded-lg bg-[#8B5CF6] text-white font-medium hover:opacity-90"
+              className="px-4 py-1.5 rounded-lg text-white font-medium hover:opacity-90 transition-all shadow-sm"
+              style={{ backgroundColor: 'var(--color-primary)' }}
             >
               Done
             </button>

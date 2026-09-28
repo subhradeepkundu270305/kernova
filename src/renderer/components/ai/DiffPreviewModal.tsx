@@ -3,6 +3,7 @@ import { DiffEditor } from '@monaco-editor/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, X, GitCompare } from 'lucide-react'
 import { useSettingsStore } from '../../stores/settingsStore'
+import { registerMonacoThemes } from '../../themes'
 
 interface DiffPreviewModalProps {
   isOpen: boolean
@@ -71,6 +72,7 @@ export const DiffPreviewModal: React.FC<DiffPreviewModalProps> = ({
               modified={modifiedCode}
               language={language}
               theme={editorTheme}
+              beforeMount={registerMonacoThemes}
               options={{
                 fontSize,
                 fontFamily,

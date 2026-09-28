@@ -142,9 +142,10 @@ export const TabBar: React.FC = () => {
               onAuxClick={(e) => handleMiddleClick(e, tab.id)}
               className={`flex items-center justify-between px-3 min-w-[120px] max-w-[200px] border-r border-[#2A2A3A] cursor-pointer group transition-colors ${
                 isActive
-                  ? 'bg-surface-2 border-b-2 border-b-[#8B5CF6]'
+                  ? 'bg-surface-2 border-b-2'
                   : 'bg-surface-1 hover:bg-surface-2 text-secondary hover:text-primary border-b-2 border-b-transparent'
               }`}
+              style={isActive ? { borderBottomColor: 'var(--color-primary)' } : undefined}
             >
               <div className="flex items-center overflow-hidden mr-2">
                 <File size={14} className="min-w-[14px] text-muted mr-2" />
@@ -191,9 +192,10 @@ export const TabBar: React.FC = () => {
           onClick={toggleSplit}
           className={`p-1.5 rounded transition-colors ${
             isSplitActive
-              ? 'text-[#8B5CF6] bg-[#8B5CF6]/15'
+              ? 'text-white'
               : 'text-[#71717A] hover:text-[#E4E4E7] hover:bg-[#1E1E2A]'
           }`}
+          style={isSplitActive ? { color: 'var(--color-primary)' } : undefined}
           title="Toggle Split View (Ctrl+\)"
         >
           <Columns size={14} />
