@@ -1,0 +1,11 @@
+node_modules
+out
+dist
+build
+.vite
+*.tsbuildinfo
+.DS_Store
+*.log
+.env*
+.cache
+.electron-gyp
