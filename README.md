@@ -23,6 +23,10 @@
   </a>
 </p>
 
+<p align="center">
+  <img src="assets/linkedin_thumbnail.png" alt="KERNOVA — Offline AI Code Editor" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</p>
+
 ### 📥 1-Click Downloads (v0.2.4)
 
 | OS | Format | Download | Quick Start |
