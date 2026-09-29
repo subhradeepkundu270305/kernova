@@ -29,6 +29,12 @@ export const ThreeBackground: React.FC = () => {
     })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+    renderer.domElement.style.position = 'absolute'
+    renderer.domElement.style.top = '0'
+    renderer.domElement.style.left = '0'
+    renderer.domElement.style.width = '100%'
+    renderer.domElement.style.height = '100%'
+    renderer.domElement.style.pointerEvents = 'none'
     container.appendChild(renderer.domElement)
 
     // Particle Cloud Geometry
@@ -77,18 +83,20 @@ export const ThreeBackground: React.FC = () => {
     const coreMesh = new THREE.Mesh(coreGeo, coreMat)
     scene.add(coreMesh)
 
-    // Mouse parallax
+    // Mouse parallax centered on container
     let mouseX = 0
     let mouseY = 0
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX - width / 2) * 0.02
-      mouseY = (e.clientY - height / 2) * 0.02
+      if (!container) return
+      const rect = container.getBoundingClientRect()
+      mouseX = (e.clientX - rect.left - rect.width / 2) * 0.02
+      mouseY = (e.clientY - rect.top - rect.height / 2) * 0.02
     }
     window.addEventListener('mousemove', handleMouseMove)
 
     // Animation loop (throttles when window is hidden)
     let animationFrameId: number
-    let clock = new THREE.Clock()
+    const clock = new THREE.Clock()
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate)
@@ -109,21 +117,30 @@ export const ThreeBackground: React.FC = () => {
 
     animate()
 
-    // Resize handler
-    const handleResize = () => {
-      if (!container) return
-      width = container.clientWidth
-      height = container.clientHeight
+    // ResizeObserver on the container to smoothly handle sidebar toggles, panel resizing, and window changes
+    const updateSize = (newWidth: number, newHeight: number) => {
+      if (newWidth <= 0 || newHeight <= 0) return
+      width = newWidth
+      height = newHeight
       camera.aspect = width / height
       camera.updateProjectionMatrix()
       renderer.setSize(width, height)
     }
-    window.addEventListener('resize', handleResize)
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width: crWidth, height: crHeight } = entry.contentRect
+        if (crWidth > 0 && crHeight > 0) {
+          updateSize(crWidth, crHeight)
+        }
+      }
+    })
+    resizeObserver.observe(container)
 
     return () => {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('resize', handleResize)
+      resizeObserver.disconnect()
       renderer.dispose()
       geometry.dispose()
       material.dispose()

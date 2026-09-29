@@ -66,6 +66,12 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
       })
     } catch (error) {
       console.error('Failed to open folder:', error)
+      set({
+        rootPath: null,
+        rootName: null,
+        tree: [],
+        selectedPath: null,
+      })
     }
   },
 

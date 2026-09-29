@@ -68,7 +68,7 @@ async function readDirHandler(
     return nodes
   } catch (err) {
     console.error(`[FS] readDir failed for ${dirPath}:`, err)
-    return []
+    throw err
   }
 }
 

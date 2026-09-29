@@ -9,19 +9,31 @@ import { useUIStore } from '../../stores/uiStore'
 import { useFileTreeStore } from '../../stores/fileTreeStore'
 
 export const TerminalPanel: React.FC = () => {
-  const { terminals, activeTerminalId, createTerminal, closeTerminal, setActiveTerminal } =
-    useTerminalStore()
+  const {
+    terminals,
+    activeTerminalId,
+    createTerminal,
+    closeTerminal,
+    markTerminalExited,
+    setActiveTerminal,
+  } = useTerminalStore()
   const { isTerminalOpen, terminalHeight, setTerminalHeight, toggleTerminal } = useUIStore()
   const { rootPath } = useFileTreeStore()
 
   const terminalContainerRef = useRef<HTMLDivElement>(null)
   const xtermInstances = useRef<Map<string, { term: Terminal; fitAddon: FitAddon }>>(new Map())
   const [isResizing, setIsResizing] = useState(false)
+  const isCreatingRef = useRef(false)
+  const lastExitTimeRef = useRef<number>(0)
 
-  // Ensure at least one terminal exists if panel is opened
+  // Ensure at least one terminal exists if panel is opened and empty
   useEffect(() => {
-    if (isTerminalOpen && terminals.length === 0) {
-      createTerminal(rootPath || undefined)
+    if (isTerminalOpen && terminals.length === 0 && !isCreatingRef.current) {
+      if (Date.now() - lastExitTimeRef.current < 1500) return
+      isCreatingRef.current = true
+      createTerminal(rootPath || undefined).finally(() => {
+        isCreatingRef.current = false
+      })
     }
   }, [isTerminalOpen, terminals.length, rootPath, createTerminal])
 
@@ -124,19 +136,29 @@ export const TerminalPanel: React.FC = () => {
       }
     })
 
-    const unsubExit = window.kernova.onTerminalExit(({ id }) => {
-      closeTerminal(id)
+    const unsubExit = window.kernova.onTerminalExit(({ id, exitCode }) => {
+      lastExitTimeRef.current = Date.now()
+      const instance = xtermInstances.current.get(id)
+      if (instance) {
+        instance.term.write(
+          `\r\n\x1b[90m[Process completed${exitCode !== undefined ? ` with code ${exitCode}` : ''}]\x1b[0m\r\n`
+        )
+      }
+      markTerminalExited(id, exitCode)
     })
 
     return () => {
       unsubData()
       unsubExit()
     }
-  }, [closeTerminal])
+  }, [markTerminalExited])
 
-  // Window resize handler to fit active terminal
+  // ResizeObserver on container to smoothly fit active terminal whenever sidebar/panels toggle
   useEffect(() => {
-    const handleResize = () => {
+    if (!terminalContainerRef.current) return
+    const container = terminalContainerRef.current
+
+    const observer = new ResizeObserver(() => {
       if (activeTerminalId) {
         const instance = xtermInstances.current.get(activeTerminalId)
         if (instance) {
@@ -148,10 +170,10 @@ export const TerminalPanel: React.FC = () => {
           })
         }
       }
-    }
+    })
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    observer.observe(container)
+    return () => observer.disconnect()
   }, [activeTerminalId])
 
   // Drag to resize terminal panel height
@@ -213,11 +235,16 @@ export const TerminalPanel: React.FC = () => {
               onClick={() => setActiveTerminal(t.id)}
               className={`flex items-center gap-2 px-2.5 py-1 rounded cursor-pointer transition-colors ${
                 t.id === activeTerminalId
-                  ? 'bg-[#1E1E2A] text-white border-b-2 border-[#8B5CF6]'
+                  ? 'bg-[#1E1E2A] text-white border-b-2 border-[var(--color-primary)]'
                   : 'text-[#71717A] hover:text-[#A1A1AA] hover:bg-[#16161E]'
               }`}
             >
               <span>{t.title}</span>
+              {t.exited && (
+                <span className="text-[10px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">
+                  exited
+                </span>
+              )}
               <button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -254,7 +281,24 @@ export const TerminalPanel: React.FC = () => {
       </div>
 
       {/* xterm canvas container */}
-      <div ref={terminalContainerRef} className="flex-1 overflow-hidden p-2 bg-[#0D0D12]" />
+      <div
+        ref={terminalContainerRef}
+        className={`flex-1 overflow-hidden p-2 bg-[#0D0D12] ${
+          terminals.length === 0 ? 'hidden' : 'block'
+        }`}
+      />
+
+      {terminals.length === 0 && (
+        <div className="flex-1 flex flex-col items-center justify-center text-[#71717A] text-xs gap-3">
+          <span>No active terminals</span>
+          <button
+            onClick={() => createTerminal(rootPath || undefined)}
+            className="px-3 py-1.5 rounded-lg bg-[#1E1E2A] hover:bg-[#2A2A3A] text-white flex items-center gap-1.5 transition-colors"
+          >
+            <Plus size={14} /> New Terminal
+          </button>
+        </div>
+      )}
     </div>
   )
 }

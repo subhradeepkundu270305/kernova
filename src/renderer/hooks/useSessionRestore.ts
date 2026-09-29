@@ -19,14 +19,20 @@ export const useSessionRestore = () => {
         if (session.sidebarOpen !== isSidebarOpen) toggleSidebar()
 
         if (session.openFolderPath) {
-          await openFolder(session.openFolderPath)
+          const exists = await window.kernova?.fileExists(session.openFolderPath)
+          if (exists) {
+            await openFolder(session.openFolderPath)
+          }
         }
 
         if (session.openTabs && session.openTabs.length > 0) {
           for (const tab of session.openTabs) {
-            await openFile(tab.filePath)
-            if (tab.cursorPosition) updateCursorPosition(tab.id, tab.cursorPosition)
-            if (tab.scrollPosition) updateScrollPosition(tab.id, tab.scrollPosition)
+            const exists = await window.kernova?.fileExists(tab.filePath)
+            if (exists) {
+              await openFile(tab.filePath)
+              if (tab.cursorPosition) updateCursorPosition(tab.id, tab.cursorPosition)
+              if (tab.scrollPosition) updateScrollPosition(tab.id, tab.scrollPosition)
+            }
           }
         }
 
