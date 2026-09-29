@@ -7,6 +7,7 @@ import { Plus, X, Terminal as TerminalIcon, ChevronDown } from 'lucide-react'
 import { useTerminalStore } from '../../stores/terminalStore'
 import { useUIStore } from '../../stores/uiStore'
 import { useFileTreeStore } from '../../stores/fileTreeStore'
+import { useSettingsStore } from '../../stores/settingsStore'
 
 export const TerminalPanel: React.FC = () => {
   const {
@@ -19,12 +20,25 @@ export const TerminalPanel: React.FC = () => {
   } = useTerminalStore()
   const { isTerminalOpen, terminalHeight, setTerminalHeight, toggleTerminal } = useUIStore()
   const { rootPath } = useFileTreeStore()
+  const { fontFamily } = useSettingsStore()
 
   const terminalContainerRef = useRef<HTMLDivElement>(null)
   const xtermInstances = useRef<Map<string, { term: Terminal; fitAddon: FitAddon }>>(new Map())
   const [isResizing, setIsResizing] = useState(false)
   const isCreatingRef = useRef(false)
   const lastExitTimeRef = useRef<number>(0)
+
+  // Dynamically update terminal font family when changed in settings
+  useEffect(() => {
+    xtermInstances.current.forEach(({ term, fitAddon }) => {
+      term.options.fontFamily = `'${fontFamily}', 'JetBrains Mono', 'Fira Code', monospace`
+      try {
+        fitAddon.fit()
+      } catch {
+        // ignore
+      }
+    })
+  }, [fontFamily])
 
   // Ensure at least one terminal exists if panel is opened and empty
   useEffect(() => {
@@ -69,7 +83,7 @@ export const TerminalPanel: React.FC = () => {
           brightCyan: '#22D3EE',
           brightWhite: '#FFFFFF',
         },
-        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+        fontFamily: `'${fontFamily}', 'JetBrains Mono', 'Fira Code', monospace`,
         fontSize: 13,
         lineHeight: 1.3,
         cursorBlink: true,

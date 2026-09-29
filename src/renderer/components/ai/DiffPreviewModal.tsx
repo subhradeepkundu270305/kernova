@@ -75,7 +75,7 @@ export const DiffPreviewModal: React.FC<DiffPreviewModalProps> = ({
               beforeMount={registerMonacoThemes}
               options={{
                 fontSize,
-                fontFamily,
+                fontFamily: `'${fontFamily}', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace`,
                 renderSideBySide: true,
                 readOnly: true,
                 smoothScrolling: true,

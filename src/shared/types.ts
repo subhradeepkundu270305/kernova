@@ -1,8 +1,21 @@
 /** Editor theme names */
-export type EditorThemeName = 'midnight' | 'aurora' | 'ember'
+export type EditorThemeName =
+  | 'midnight'
+  | 'aurora'
+  | 'ember'
+  | 'cyberpunk'
+  | 'solaris'
+  | 'abyss'
 
 /** Font family options */
-export type FontFamily = 'JetBrains Mono' | 'Fira Code'
+export type FontFamily =
+  | 'JetBrains Mono'
+  | 'Fira Code'
+  | 'Cascadia Code'
+  | 'Source Code Pro'
+  | 'Geist Mono'
+  | 'Inconsolata'
+  | 'Ubuntu Mono'
 
 /** App settings persisted to disk */
 export interface AppSettings {

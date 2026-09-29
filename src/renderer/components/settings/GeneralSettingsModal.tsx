@@ -2,6 +2,7 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Settings, Palette, Type, Save, Eye, Sliders, X, Check, Zap } from 'lucide-react'
 import { useSettingsStore } from '../../stores/settingsStore'
+import { THEMES } from '../../themes'
 import type { EditorThemeName, FontFamily } from '../../../shared/types'
 
 interface GeneralSettingsModalProps {
@@ -57,61 +58,42 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                 Color Theme
               </span>
 
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  {
-                    id: 'midnight',
-                    label: 'Midnight (Default)',
-                    bg: '#0A0A0F',
-                    accent: '#8B5CF6',
-                    text: 'Violet & Cyan Neon',
-                  },
-                  {
-                    id: 'aurora',
-                    label: 'Aurora',
-                    bg: '#081414',
-                    accent: '#22C55E',
-                    text: 'Emerald Glow',
-                  },
-                  {
-                    id: 'ember',
-                    label: 'Ember',
-                    bg: '#140A0A',
-                    accent: '#F97316',
-                    text: 'Warm Red-Orange',
-                  },
-                ].map((th) => (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {Object.values(THEMES).map((th) => (
                   <button
                     key={th.id}
                     onClick={() => updateSetting('editorTheme', th.id as EditorThemeName)}
-                    className={`p-3 rounded-xl border text-left flex flex-col justify-between h-24 transition-all relative overflow-hidden ${
+                    className={`p-3 rounded-xl border text-left flex flex-col justify-between h-28 transition-all relative overflow-hidden ${
                       editorTheme === th.id
                         ? 'ring-2'
                         : 'border-[#2A2A3A] hover:border-[#3F3F5A]'
                     }`}
                     style={{
-                      backgroundColor: th.bg,
-                      borderColor: editorTheme === th.id ? th.accent : undefined,
-                      boxShadow: editorTheme === th.id ? `0 0 16px ${th.accent}40` : undefined,
+                      backgroundColor: th.bgBase,
+                      borderColor: editorTheme === th.id ? th.primary : undefined,
+                      boxShadow: editorTheme === th.id ? `0 0 16px ${th.primary}40` : undefined,
                     }}
                   >
                     <div>
-                      <div className="font-bold text-white text-xs">{th.label}</div>
-                      <div className="text-[10px] text-[#A1A1AA] mt-0.5">{th.text}</div>
+                      <div className="font-bold text-white text-xs">{th.name}</div>
+                      <div className="text-[10px] text-[#A1A1AA] mt-0.5">{th.subtitle}</div>
                     </div>
 
                     <div className="flex items-center gap-1.5 mt-2">
-                      <span
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: th.accent }}
-                      />
-                      <span className="w-3 h-3 rounded-full bg-white/20" />
+                      {th.palette.map((color, idx) => (
+                        <span
+                          key={idx}
+                          className="w-3 h-3 rounded-full border border-black/40 shadow-sm"
+                          style={{ backgroundColor: color }}
+                          title={color}
+                        />
+                      ))}
                     </div>
 
                     {editorTheme === th.id && (
                       <span
                         className="absolute top-2 right-2 p-1 rounded-full text-white"
-                        style={{ backgroundColor: th.accent }}
+                        style={{ backgroundColor: th.primary }}
                       >
                         <Check size={10} />
                       </span>
@@ -138,6 +120,11 @@ export const GeneralSettingsModal: React.FC<GeneralSettingsModalProps> = ({ isOp
                   >
                     <option value="JetBrains Mono">JetBrains Mono</option>
                     <option value="Fira Code">Fira Code</option>
+                    <option value="Cascadia Code">Cascadia Code</option>
+                    <option value="Source Code Pro">Source Code Pro</option>
+                    <option value="Geist Mono">Geist Mono</option>
+                    <option value="Inconsolata">Inconsolata</option>
+                    <option value="Ubuntu Mono">Ubuntu Mono</option>
                   </select>
                 </div>
 

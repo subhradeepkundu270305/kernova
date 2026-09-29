@@ -23,13 +23,13 @@
   </a>
 </p>
 
-### 📥 1-Click Downloads (v0.1.0)
+### 📥 1-Click Downloads (v0.2.0)
 
 | OS | Format | Download | Quick Start |
 | :--- | :--- | :--- | :--- |
-| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.1.0.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-0.1.0.AppImage) | `chmod +x KERNOVA-0.1.0.AppImage && ./KERNOVA-0.1.0.AppImage` |
-| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.1.0_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/kernova_0.1.0_amd64.deb) | `sudo dpkg -i kernova_0.1.0_amd64.deb` |
-| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.1.0-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-0.1.0-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
+| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.0.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/KERNOVA-0.2.0.AppImage) | `chmod +x KERNOVA-0.2.0.AppImage && ./KERNOVA-0.2.0.AppImage` |
+| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.0_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/kernova_0.2.0_amd64.deb) | `sudo dpkg -i kernova_0.2.0_amd64.deb` |
+| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.0-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/KERNOVA-0.2.0-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
 
 ---
 
@@ -65,7 +65,7 @@ Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA),
 - **Smart Router**: Auto-selects cloud when online and fallbacks to Ollama seamlessly when offline.
 
 ### 💻 3. Full-Fledged Engineering Workspace
-- **Offline Monaco Editor**: The battle-tested engine powering VS Code, pre-bundled with offline language grammar, syntax highlighting, and custom dark themes (*Midnight*, *Aurora*, *Ember*).
+- **Offline Monaco Editor**: The battle-tested engine powering VS Code, pre-bundled with offline language grammar, syntax highlighting, and 6 custom themes (*Midnight*, *Aurora*, *Ember*, *Cyberpunk*, *Solaris*, *Abyss*), plus 7 selectable monospace font styles (*JetBrains Mono*, *Fira Code*, *Cascadia Code*, *Source Code Pro*, *Geist Mono*, *Inconsolata*, *Ubuntu Mono*).
 - **Filesystem Tree & CRUD**: Fast directory browsing, file/folder creation, rename, delete, duplicate, and system file-manager integration.
 - **Tabbed Multi-File Editing**: Fast tab switching, unsaved change indicators, close-confirmation guards, and drag-and-drop reordering.
 - **Autosave by Default**: Background debounce saving (default 1000ms) with zero file-loss guarantee.
@@ -133,15 +133,15 @@ Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA),
 #### Linux (AppImage & .deb)
 ```bash
 # AppImage
-chmod +x KERNOVA-0.1.0.AppImage
-./KERNOVA-0.1.0.AppImage
+chmod +x KERNOVA-0.2.0.AppImage
+./KERNOVA-0.2.0.AppImage
 
 # Debian / Ubuntu / Zorin OS (.deb)
-sudo dpkg -i KERNOVA-0.1.0.deb
+sudo dpkg -i kernova_0.2.0_amd64.deb
 ```
 
-#### Windows (.exe)
-Download and run `KERNOVA-Setup-0.1.0.exe` and follow the graphical installer.
+#### Windows (.zip)
+Download and unzip `KERNOVA-0.2.0-windows-x64.zip`, then double-click `KERNOVA.exe` to run.
 
 ---
 

@@ -115,7 +115,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
         }
         options={{
           fontSize,
-          fontFamily,
+          fontFamily: `'${fontFamily}', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace`,
           fontLigatures,
           minimap: { enabled: minimap },
           wordWrap,

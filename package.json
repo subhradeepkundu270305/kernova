@@ -1,6 +1,6 @@
 {
   "name": "kernova",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "KERNOVA — Offline AI Code Editor. Code locally. Think intelligently.",
   "main": "./out/main/index.js",
   "homepage": "https://github.com/subhradeepkundu270305/kernova",
