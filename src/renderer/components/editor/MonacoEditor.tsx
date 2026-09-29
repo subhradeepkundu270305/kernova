@@ -57,7 +57,10 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     monacoInstance.editor.setTheme(editorTheme)
 
     editor.onDidChangeModelContent(() => {
-      onChange?.(editor.getValue())
+      const model = editor.getModel()
+      if (model && !model.isDisposed()) {
+        onChange?.(model.getValue())
+      }
     })
 
     editor.onDidChangeCursorPosition((e) => {
@@ -121,12 +124,19 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
     }
   }
 
-  // Update content if changed externally
+  // Update content only if changed externally (e.g. from disk reload, git checkout)
   useEffect(() => {
     if (editorRef.current) {
-      const currentValue = editorRef.current.getValue()
-      if (currentValue !== content) {
-        editorRef.current.setValue(content)
+      const model = editorRef.current.getModel()
+      if (model && !model.isDisposed()) {
+        const currentValue = model.getValue()
+        if (currentValue !== content) {
+          const viewState = editorRef.current.saveViewState()
+          model.setValue(content)
+          if (viewState) {
+            editorRef.current.restoreViewState(viewState)
+          }
+        }
       }
     }
   }, [content])

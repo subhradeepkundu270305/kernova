@@ -14,7 +14,7 @@ const ActiveEditor: React.FC<{ tabId: string }> = ({ tabId }) => {
   const { autoSave, autoSaveDelay } = useSettingsStore()
 
   const tab = tabs.find((t) => t.id === tabId)
-  const content = fileContents[tabId] || ''
+  const content = fileContents[tabId] !== undefined ? fileContents[tabId] : ''
 
   useAutoSave(tab?.filePath || '', content, tab?.isDirty || false, autoSave, autoSaveDelay)
 
@@ -22,6 +22,7 @@ const ActiveEditor: React.FC<{ tabId: string }> = ({ tabId }) => {
 
   return (
     <MonacoEditor
+      key={tab.filePath}
       filePath={tab.filePath}
       content={content}
       language={tab.language}
@@ -49,7 +50,7 @@ export const EditorArea: React.FC = () => {
       <div className="flex-1 flex overflow-hidden relative">
         {/* Primary Editor Pane */}
         <div className="flex-1 relative overflow-hidden">
-          {activeTabId && <ActiveEditor tabId={activeTabId} />}
+          {activeTabId && <ActiveEditor key={activeTabId} tabId={activeTabId} />}
         </div>
 
         {/* Split Editor Pane */}
@@ -86,7 +87,7 @@ export const EditorArea: React.FC = () => {
             {/* Split active editor */}
             <div className="flex-1 relative overflow-hidden">
               {splitActiveTabId ? (
-                <ActiveEditor tabId={splitActiveTabId} />
+                <ActiveEditor key={`split-${splitActiveTabId}`} tabId={splitActiveTabId} />
               ) : (
                 <div className="h-full flex items-center justify-center text-xs text-[#71717A]">
                   Select a tab to view side-by-side

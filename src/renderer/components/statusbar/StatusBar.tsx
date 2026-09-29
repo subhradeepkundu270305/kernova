@@ -59,22 +59,37 @@ export const StatusBar: React.FC = () => {
 
   // Periodic Online / Offline check
   useEffect(() => {
-    const handleOnline = () => setIsOnline(true)
-    const handleOffline = () => setIsOnline(false)
+    const checkNetwork = async () => {
+      // If browser/OS indicates offline (Airplane mode, no default route), reflect immediately
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        setIsOnline(false)
+        return
+      }
+
+      if (window.kernova) {
+        try {
+          const online = await window.kernova.checkOnline()
+          setIsOnline(online)
+        } catch {
+          setIsOnline(false)
+        }
+      } else {
+        setIsOnline(Boolean(navigator.onLine))
+      }
+    }
+
+    const handleOnline = () => {
+      checkNetwork()
+    }
+    const handleOffline = () => {
+      setIsOnline(false)
+    }
 
     window.addEventListener('online', handleOnline)
     window.addEventListener('offline', handleOffline)
 
-    if (window.kernova) {
-      window.kernova.checkOnline().then(setIsOnline)
-    }
-
-    const interval = setInterval(async () => {
-      if (window.kernova) {
-        const online = await window.kernova.checkOnline()
-        setIsOnline(online)
-      }
-    }, 10000)
+    checkNetwork()
+    const interval = setInterval(checkNetwork, 10000)
 
     return () => {
       window.removeEventListener('online', handleOnline)
