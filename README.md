@@ -37,13 +37,43 @@
 
 ---
 
-## ⚡ Overview
+## ⚡ About KERNOVA
 
-**KERNOVA** is a blazing-fast, offline-first desktop code editor tailored for developers, students, and engineers who demand absolute privacy, responsive performance, and intelligent code assistance without cloud lock-in.
+**KERNOVA** is a modern, high-performance, offline-first desktop code editor built for developers, students, researchers, and engineers who demand absolute data privacy, instantaneous responsiveness, and intelligent AI code assistance without relying on cloud infrastructure or subscription fees.
 
-Combining the simplicity and snappiness of classic editors like **gedit** with a futuristic **dark glassmorphic 3D aesthetic**, KERNOVA integrates state-of-the-art local Large Language Models (LLMs) via **Ollama** directly into your editing workflow.
+In an era where modern code editors constantly stream your keystrokes, source code, and intellectual property to remote cloud servers, KERNOVA takes a fundamentally different path: **100% of your code and AI processing remains on your local hardware**.
 
-Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA), or developing sensitive intellectual property, **KERNOVA never forces your code into external servers**.
+### 🌟 Why KERNOVA?
+
+- 🔒 **Absolute Privacy & Zero Telemetry**: No tracking, no analytics, no accounts, and no data harvesting. Your private code and confidential algorithms never leave your machine.
+- ✈️ **True Offline-First Independence**: Full offline AI assistance on airplanes, trains, remote sites, or in high-security air-gapped environments without an active internet connection.
+- ⚡ **GPU-Accelerated Local Intelligence**: Powered by **Ollama** and the **Qwen2.5-Coder** family (0.5B, 1.5B, 3B, 7B, 14B), delivering sub-second ghost-text completions and contextual codebase chat directly from your local CPU/GPU (NVIDIA CUDA, Apple Silicon Metal, or AMD ROCm).
+- 🪶 **Engineered for 8 GB RAM Machines**: Heavy electron IDEs frequently choke on standard developer laptops. KERNOVA was architected from the ground up to consume `<400 MB` base memory, ensuring silky 60fps performance even on budget hardware.
+- 🎨 **Futuristic Neon Glassmorphic UI**: Experience 6 custom-designed 4-color palette themes (*Midnight*, *Aurora*, *Ember*, *Cyberpunk*, *Solaris*, *Abyss*) paired with an ambient Three.js 3D background that dynamically reacts to theme changes.
+
+---
+
+### 📊 KERNOVA vs. Cloud-Dependent Editors
+
+| Feature | 🚀 **KERNOVA** | ☁️ Cursor / Windsurf | 💼 VS Code + Copilot |
+| :--- | :---: | :---: | :---: |
+| **Offline AI Code Autocomplete** | ✅ **100% Offline (Local LLM)** | ❌ Fails without Internet | ❌ Fails without Internet |
+| **Source Code Privacy** | 🛡️ **Zero code leaves device** | ⚠️ Transmitted to Cloud | ⚠️ Transmitted to Cloud |
+| **Telemetry & Data Harvesting** | 🚫 **0% (Zero Telemetry)** | ⚠️ Heavy Tracking | ⚠️ Microsoft Telemetry |
+| **Subscription / Paywalls** | 🆓 **100% Free & Open Source** | 💳 $20/month | 💳 $10/month |
+| **Hardware RAM Requirement** | ⚡ **Optimized for 8 GB RAM** | ⚠️ 16 GB+ recommended | ⚠️ 16 GB+ recommended |
+| **Local GPU Acceleration** | ✅ **Direct CUDA / ROCm offload** | ❌ Cloud GPUs only | ❌ Cloud GPUs only |
+| **Integrated Terminal & 1-Click Runner** | ✅ **Instant F5 Execution** | ⚠️ Manual config | ⚠️ Manual config |
+| **Air-Gapped / Flight Ready** | ✈️ **Fully Functional** | ❌ Broken | ❌ Broken |
+
+---
+
+### 🎯 Who is KERNOVA for?
+
+1. **Competitive Programmers & Students**: Master Data Structures & Algorithms (DSA) with instant Big-O time and space complexity audits, code explanations, and 1-click test generation with zero distractions.
+2. **Privacy-Conscious Engineers**: Work on proprietary algorithms, NDA-protected source code, and confidential corporate repositories without risking compliance or privacy leaks.
+3. **Frequent Travelers & Digital Nomads**: Write, refactor, and debug code with intelligent AI autocomplete while in flight, on trains, or in locations with spotty or nonexistent internet.
+4. **Open-Source Purists**: Enjoy a developer-first environment with zero vendor lock-in, zero paywalls, and complete transparency under the permissive MIT license.
 
 ---
 
