@@ -75,7 +75,24 @@ export const useAIStore = create<AIState>((set, get) => ({
   sendMessage: async (userText: string) => {
     if (!userText.trim() || get().isStreaming) return
 
-    const { messages, selectedChatModel, includeActiveFile } = get()
+    let { messages, selectedChatModel, includeActiveFile, installedModels } = get()
+
+    // If installed models list is empty, refresh now
+    if (installedModels.length === 0) {
+      try {
+        await get().refreshModels()
+        installedModels = get().installedModels
+      } catch {
+        // ignore
+      }
+    }
+
+    // Auto-select valid model if current selection isn't present
+    if (installedModels.length > 0 && !installedModels.some((m) => m.name === selectedChatModel)) {
+      selectedChatModel = installedModels[0].name
+      set({ selectedChatModel })
+    }
+
     const { contextPrompt, contextFiles } = buildProjectContext({ includeActiveFile })
 
     const userMessage: ChatMessage = {
@@ -136,11 +153,12 @@ export const useAIStore = create<AIState>((set, get) => ({
     } catch (err: any) {
       if (err.name !== 'AbortError') {
         const errorNote =
-          `\n\n*[Notice: Could not connect to Ollama. Make sure Ollama is running (` +
+          `\n\n*[Notice: Error connecting to local AI (${err.message || err}). ` +
+          `Make sure Ollama is running (` +
           '`ollama serve`' +
           `) and model ` +
           `\`${selectedChatModel}\`` +
-          ` is installed.]*`
+          ` is available.]*`
 
         set((state) => ({
           messages: state.messages.map((m) =>

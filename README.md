@@ -23,13 +23,13 @@
   </a>
 </p>
 
-### 📥 1-Click Downloads (v0.2.0)
+### 📥 1-Click Downloads (v0.2.1)
 
 | OS | Format | Download | Quick Start |
 | :--- | :--- | :--- | :--- |
-| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.0.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/KERNOVA-0.2.0.AppImage) | `chmod +x KERNOVA-0.2.0.AppImage && ./KERNOVA-0.2.0.AppImage` |
-| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.0_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/kernova_0.2.0_amd64.deb) | `sudo dpkg -i kernova_0.2.0_amd64.deb` |
-| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.0-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.0/KERNOVA-0.2.0-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
+| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.1.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/KERNOVA-0.2.1.AppImage) | `chmod +x KERNOVA-0.2.1.AppImage && ./KERNOVA-0.2.1.AppImage` |
+| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.1_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/kernova_0.2.1_amd64.deb) | `sudo dpkg -i kernova_0.2.1_amd64.deb` |
+| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.1-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/KERNOVA-0.2.1-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
 
 ---
 
@@ -78,7 +78,7 @@ Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA),
 
 ### 🪄 4. AI-Powered Workflow Accelerators
 - **Inline Ghost-Text Completions**: Debounced suggestions that appear as you write. Press `Tab` to accept or `Esc` to dismiss.
-- **Context Selection Actions**: Highlight any code snippet to immediately:
+- **Context Selection Actions & Floating Toolbar**: Highlight any code snippet to trigger a sleek floating action bar (or right-click) to immediately:
   - 📖 **Explain Code**
   - 🐛 **Find & Fix Bugs**
   - ♻️ **Refactor & Modernize**
@@ -133,15 +133,15 @@ Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA),
 #### Linux (AppImage & .deb)
 ```bash
 # AppImage
-chmod +x KERNOVA-0.2.0.AppImage
-./KERNOVA-0.2.0.AppImage
+chmod +x KERNOVA-0.2.1.AppImage
+./KERNOVA-0.2.1.AppImage
 
 # Debian / Ubuntu / Zorin OS (.deb)
-sudo dpkg -i kernova_0.2.0_amd64.deb
+sudo dpkg -i kernova_0.2.1_amd64.deb
 ```
 
 #### Windows (.zip)
-Download and unzip `KERNOVA-0.2.0-windows-x64.zip`, then double-click `KERNOVA.exe` to run.
+Download and unzip `KERNOVA-0.2.1-windows-x64.zip`, then double-click `KERNOVA.exe` to run.
 
 ---
 

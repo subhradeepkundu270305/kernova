@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import Editor, { OnMount } from '@monaco-editor/react'
 import { motion } from 'framer-motion'
 import * as monaco from 'monaco-editor'
 import { useSettingsStore } from '../../stores/settingsStore'
 import { registerInlineCompletionProvider } from './inlineCompletion'
-import { SELECTION_ACTIONS, triggerSelectionAction } from '../ai/SelectionActions'
+import { SELECTION_ACTIONS, triggerSelectionAction, SelectionToolbar } from '../ai/SelectionActions'
 import { registerMonacoThemes } from '../../themes'
 
 interface MonacoEditorProps {
@@ -28,6 +28,12 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
 }) => {
   const { editorTheme, fontSize, fontFamily, fontLigatures, minimap, wordWrap } = useSettingsStore()
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+  const [selectionPopup, setSelectionPopup] = useState<{
+    visible: boolean
+    top: number
+    left: number
+    selectedText: string
+  }>({ visible: false, top: 0, left: 0, selectedText: '' })
 
   useEffect(() => {
     if (!inlineProviderRegistered) {
@@ -60,23 +66,55 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
 
     editor.onDidScrollChange((e) => {
       onScrollChange?.({ top: e.scrollTop, left: e.scrollLeft })
+      updateSelectionPopup()
     })
+
+    // Listen to selection changes to display floating action toolbar
+    const updateSelectionPopup = () => {
+      const selection = editor.getSelection()
+      if (selection && !selection.isEmpty()) {
+        const text = editor.getModel()?.getValueInRange(selection) || ''
+        if (text.trim().length > 0) {
+          const startPos = selection.getStartPosition()
+          const coords = editor.getScrolledVisiblePosition(startPos)
+          if (coords) {
+            setSelectionPopup({
+              visible: true,
+              top: Math.max(8, coords.top - 44),
+              left: Math.max(16, coords.left),
+              selectedText: text,
+            })
+            return
+          }
+        }
+      }
+      setSelectionPopup((prev) => (prev.visible ? { ...prev, visible: false } : prev))
+    }
+
+    editor.onDidChangeCursorSelection(updateSelectionPopup)
 
     // Register selection actions into Monaco's right-click context menu
     for (const action of SELECTION_ACTIONS) {
       editor.addAction({
         id: `kernova-action-${action.id}`,
         label: `AI: ${action.label}`,
-        contextMenuGroupId: '1_modification',
+        contextMenuGroupId: '0_kernova_ai',
         contextMenuOrder: 1,
-        precondition: 'editorHasSelection',
         run: (ed) => {
+          let selectedText = ''
           const selection = ed.getSelection()
-          if (selection) {
-            const selectedText = ed.getModel()?.getValueInRange(selection)
-            if (selectedText) {
-              triggerSelectionAction(action.id, selectedText)
+          if (selection && !selection.isEmpty()) {
+            selectedText = ed.getModel()?.getValueInRange(selection) || ''
+          }
+          if (!selectedText.trim()) {
+            const pos = ed.getPosition()
+            if (pos) {
+              const lineContent = ed.getModel()?.getLineContent(pos.lineNumber)
+              selectedText = lineContent || ''
             }
+          }
+          if (selectedText.trim()) {
+            triggerSelectionAction(action.id, selectedText)
           }
         },
       })
@@ -136,6 +174,17 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
             mode: 'subsequent',
           },
         }}
+      />
+
+      {/* Floating Selection Action Toolbar */}
+      <SelectionToolbar
+        visible={selectionPopup.visible}
+        top={selectionPopup.top}
+        left={selectionPopup.left}
+        selectedText={selectionPopup.selectedText}
+        onClose={() =>
+          setSelectionPopup({ visible: false, top: 0, left: 0, selectedText: '' })
+        }
       />
     </div>
   )

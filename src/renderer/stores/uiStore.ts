@@ -29,6 +29,8 @@ export interface UIState {
   setSidebarTab: (tab: 'files' | 'search') => void
   toggleTerminal: () => void
   toggleAIChat: () => void
+  openAIChat: () => void
+  closeAIChat: () => void
   toggleSplit: () => void
   toggleFocusMode: () => void
   openCommandPalette: (mode?: 'commands' | 'files') => void
@@ -67,6 +69,8 @@ export const useUIStore = create<UIState>((set) => ({
   setSidebarTab: (sidebarTab) => set({ sidebarTab, isSidebarOpen: true }),
   toggleTerminal: () => set((state) => ({ isTerminalOpen: !state.isTerminalOpen })),
   toggleAIChat: () => set((state) => ({ isAIChatOpen: !state.isAIChatOpen })),
+  openAIChat: () => set({ isAIChatOpen: true }),
+  closeAIChat: () => set({ isAIChatOpen: false }),
   toggleSplit: () => set((state) => ({ isSplitActive: !state.isSplitActive })),
   toggleFocusMode: () =>
     set((state) => ({
