@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+import 'monaco-editor/min/vs/editor/editor.main.css'
 import './styles/globals.css'
 
 import { loader } from '@monaco-editor/react'
@@ -22,6 +23,20 @@ self.MonacoEnvironment = {
     return new editorWorker()
   },
 }
+
+// Configure Monaco TypeScript & JavaScript defaults for offline intelligence
+monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+  target: monaco.languages.typescript.ScriptTarget.ESNext,
+  allowNonTsExtensions: true,
+  moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+  module: monaco.languages.typescript.ModuleKind.CommonJS,
+  noEmit: true,
+})
+
+monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+  target: monaco.languages.typescript.ScriptTarget.ESNext,
+  allowNonTsExtensions: true,
+})
 
 // Configure @monaco-editor/react to use the local Monaco instance
 loader.config({ monaco })

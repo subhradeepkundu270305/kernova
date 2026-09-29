@@ -23,13 +23,13 @@
   </a>
 </p>
 
-### 📥 1-Click Downloads (v0.2.3)
+### 📥 1-Click Downloads (v0.2.4)
 
 | OS | Format | Download | Quick Start |
 | :--- | :--- | :--- | :--- |
-| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.3.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.3/KERNOVA-0.2.3.AppImage) | `chmod +x KERNOVA-0.2.3.AppImage && ./KERNOVA-0.2.3.AppImage` |
-| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.3_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.3/kernova_0.2.3_amd64.deb) | `sudo dpkg -i kernova_0.2.3_amd64.deb` |
-| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.3-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.3/KERNOVA-0.2.3-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
+| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.4.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.4/KERNOVA-0.2.4.AppImage) | `chmod +x KERNOVA-0.2.4.AppImage && ./KERNOVA-0.2.4.AppImage` |
+| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.4_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.4/kernova_0.2.4_amd64.deb) | `sudo dpkg -i kernova_0.2.4_amd64.deb` |
+| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.4-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.4/KERNOVA-0.2.4-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
 
 ---
 

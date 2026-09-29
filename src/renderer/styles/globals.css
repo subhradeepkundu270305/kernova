@@ -73,3 +73,28 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), local('monospace');
 }
+
+/* Monaco Suggest Widget Glassmorphic & Modern Polish */
+.monaco-editor .suggest-widget {
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--border-color, #2A2A3A) !important;
+  overflow: hidden !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row {
+  border-radius: 4px !important;
+  margin: 1px 4px !important;
+  transition: background-color 0.1s ease;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row.focused {
+  background-color: var(--color-primary-glow, rgba(139, 92, 246, 0.25)) !important;
+}
+
+.monaco-editor .suggest-details {
+  border-radius: 8px !important;
+  border: 1px solid var(--border-color, #2A2A3A) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+

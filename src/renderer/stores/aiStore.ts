@@ -93,7 +93,7 @@ export const useAIStore = create<AIState>((set, get) => ({
       set({ selectedChatModel })
     }
 
-    const { contextPrompt, contextFiles } = buildProjectContext({ includeActiveFile })
+    const { contextPrompt, contextFiles, activeFileInfo } = buildProjectContext({ includeActiveFile })
 
     const userMessage: ChatMessage = {
       id: `msg-${Date.now()}-user`,
@@ -119,15 +119,15 @@ export const useAIStore = create<AIState>((set, get) => ({
     abortController = new AbortController()
 
     try {
-      // Build messages array including system prompt and context
+      // Build messages array including system prompt with active file language directive and context
       const apiMessages: { role: string; content: string }[] = [
-        { role: 'system', content: buildSystemPrompt() },
+        { role: 'system', content: buildSystemPrompt(activeFileInfo) },
       ]
 
       if (contextPrompt) {
         apiMessages.push({
           role: 'system',
-          content: `Here is the current workspace context:\n${contextPrompt}`,
+          content: `Here is the current workspace and active file context:\n${contextPrompt}`,
         })
       }
 
