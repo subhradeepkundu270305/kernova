@@ -20,6 +20,8 @@ interface EditorState {
   unpinTab: (tabId: string) => void
   updateCursorPosition: (tabId: string, position: { lineNumber: number; column: number }) => void
   updateScrollPosition: (tabId: string, position: { top: number; left: number }) => void
+  handleFileRename: (oldPath: string, newPath: string) => void
+  handleFileDelete: (deletedPath: string) => void
 }
 
 const getLanguageFromPath = (filePath: string) => {
@@ -201,4 +203,61 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       tabs: state.tabs.map((t) => (t.id === tabId ? { ...t, scrollPosition: position } : t)),
     }))
   },
+
+  handleFileRename: (oldPath: string, newPath: string) => {
+    set((state) => {
+      const newTabs = state.tabs.map((tab) => {
+        if (tab.filePath === oldPath) {
+          return {
+            ...tab,
+            id: newPath,
+            filePath: newPath,
+            fileName: getFileName(newPath),
+            language: getLanguageFromPath(newPath),
+          }
+        }
+        if (tab.filePath.startsWith(oldPath + '/') || tab.filePath.startsWith(oldPath + '\\')) {
+          const updatedFilePath = tab.filePath.replace(oldPath, newPath)
+          return {
+            ...tab,
+            id: updatedFilePath,
+            filePath: updatedFilePath,
+            fileName: getFileName(updatedFilePath),
+            language: getLanguageFromPath(updatedFilePath),
+          }
+        }
+        return tab
+      })
+
+      const newFileContents = { ...state.fileContents }
+      if (newFileContents[oldPath] !== undefined) {
+        newFileContents[newPath] = newFileContents[oldPath]
+        delete newFileContents[oldPath]
+      }
+
+      const newActiveTabId = state.activeTabId === oldPath ? newPath : state.activeTabId
+      const newSplitTabId = state.splitActiveTabId === oldPath ? newPath : state.splitActiveTabId
+
+      return {
+        tabs: newTabs,
+        fileContents: newFileContents,
+        activeTabId: newActiveTabId,
+        splitActiveTabId: newSplitTabId,
+      }
+    })
+  },
+
+  handleFileDelete: (deletedPath: string) => {
+    const state = get()
+    const affectedTabs = state.tabs.filter(
+      (t) =>
+        t.filePath === deletedPath ||
+        t.filePath.startsWith(deletedPath + '/') ||
+        t.filePath.startsWith(deletedPath + '\\')
+    )
+    affectedTabs.forEach((tab) => {
+      get().closeTab(tab.id)
+    })
+  },
 }))
+

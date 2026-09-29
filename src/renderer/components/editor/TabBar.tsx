@@ -1,5 +1,6 @@
 import React from 'react'
-import { X, Circle, File, Play, Columns } from 'lucide-react'
+import { X, Circle, Play, Columns } from 'lucide-react'
+import { FileIcon } from '../common/FileIcon'
 import { useEditorStore } from '../../stores/editorStore'
 import { useUIStore } from '../../stores/uiStore'
 import { useTerminalStore } from '../../stores/terminalStore'
@@ -148,7 +149,7 @@ export const TabBar: React.FC = () => {
               style={isActive ? { borderBottomColor: 'var(--color-primary)' } : undefined}
             >
               <div className="flex items-center overflow-hidden mr-2">
-                <File size={14} className="min-w-[14px] text-muted mr-2" />
+                <FileIcon fileName={tab.fileName} size={14} className="mr-2 shrink-0" />
                 <span className={`text-sm truncate ${isActive ? 'text-primary' : ''}`}>
                   {tab.fileName}
                 </span>

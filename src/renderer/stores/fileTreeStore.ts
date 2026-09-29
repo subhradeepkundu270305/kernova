@@ -1,17 +1,28 @@
 import { create } from 'zustand'
 import { FileTreeNode } from '../../shared/types'
+import { useEditorStore } from './editorStore'
+
+export interface CreationTarget {
+  parentPath: string
+  type: 'file' | 'folder'
+}
 
 interface FileTreeState {
   rootPath: string | null
   rootName: string | null
   tree: FileTreeNode[]
   selectedPath: string | null
+  creationTarget: CreationTarget | null
 
   openFolder: (folderPath: string) => Promise<void>
   loadChildren: (dirPath: string) => Promise<void>
   toggleExpand: (dirPath: string) => void
-  selectNode: (path: string) => void
+  collapseAll: () => void
+  selectNode: (path: string | null) => void
   refreshTree: () => Promise<void>
+
+  startCreation: (targetPath?: string, type?: 'file' | 'folder') => void
+  cancelCreation: () => void
 
   createFile: (parentPath: string, name: string) => Promise<string>
   createFolder: (parentPath: string, name: string) => Promise<void>
@@ -51,6 +62,7 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
   rootName: null,
   tree: [],
   selectedPath: null,
+  creationTarget: null,
 
   openFolder: async (folderPath: string) => {
     try {
@@ -127,18 +139,75 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
     }
   },
 
-  selectNode: (path: string) => set({ selectedPath: path }),
+  collapseAll: () => {
+    const collapseRecursive = (nodes: FileTreeNode[]): FileTreeNode[] => {
+      return nodes.map((node) => {
+        if (node.type === 'directory') {
+          return {
+            ...node,
+            isExpanded: false,
+            children: node.children ? collapseRecursive(node.children) : undefined,
+          }
+        }
+        return node
+      })
+    }
+    set((state) => ({ tree: collapseRecursive(state.tree) }))
+  },
+
+  selectNode: (path: string | null) => set({ selectedPath: path }),
+
+  startCreation: (targetPath?: string, type: 'file' | 'folder' = 'file') => {
+    const state = get()
+    if (!state.rootPath) return
+    let parent = targetPath
+    if (!parent) {
+      if (state.selectedPath) {
+        const findNode = (nodes: FileTreeNode[]): FileTreeNode | null => {
+          for (const n of nodes) {
+            if (n.path === state.selectedPath) return n
+            if (n.children) {
+              const found = findNode(n.children)
+              if (found) return found
+            }
+          }
+          return null
+        }
+        const sel = findNode(state.tree)
+        if (sel) {
+          parent = sel.type === 'directory' ? sel.path : getParentPath(sel.path)
+        }
+      }
+      if (!parent) parent = state.rootPath
+    }
+
+    // Ensure target folder is expanded
+    if (parent !== state.rootPath) {
+      const ensureExpanded = (nodes: FileTreeNode[]): FileTreeNode[] => {
+        return nodes.map((n) => {
+          if (n.path === parent) {
+            return { ...n, isExpanded: true }
+          }
+          if (n.children) {
+            return { ...n, children: ensureExpanded(n.children) }
+          }
+          return n
+        })
+      }
+      set((s) => ({ tree: ensureExpanded(s.tree) }))
+    }
+
+    set({ creationTarget: { parentPath: parent, type } })
+  },
+
+  cancelCreation: () => set({ creationTarget: null }),
 
   refreshTree: async () => {
     const state = get()
     if (!state.rootPath) return
 
-    // Simplistic refresh: just reload the root for now.
-    // In a full implementation, you'd want to maintain the expanded state.
     try {
       const nodes = await window.kernova.readDir(state.rootPath)
-
-      // Preserve expanded state logic could go here
       const preserveExpanded = (
         newNodes: FileTreeNode[],
         oldTree: FileTreeNode[]
@@ -146,8 +215,6 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
         return newNodes.map((newNode) => {
           const oldNode = oldTree.find((n) => n.path === newNode.path)
           if (oldNode && oldNode.isExpanded && newNode.type === 'directory') {
-            // In a perfect world we would recursively readDir here, but for simplicity
-            // we'll let the user re-expand or use the file watcher for incremental updates
             return { ...newNode, isExpanded: oldNode.isExpanded, children: oldNode.children }
           }
           return newNode
@@ -171,6 +238,8 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
     } else {
       await state.loadChildren(parentPath)
     }
+    set({ creationTarget: null })
+    useEditorStore.getState().openFile(filePath)
     return filePath
   },
 
@@ -185,6 +254,7 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
     } else {
       await state.loadChildren(parentPath)
     }
+    set({ creationTarget: null })
   },
 
   renameItem: async (oldPath: string, newName: string) => {
@@ -200,6 +270,7 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
     } else {
       await state.loadChildren(parentPath)
     }
+    useEditorStore.getState().handleFileRename(oldPath, newPath)
   },
 
   deleteItem: async (itemPath: string) => {
@@ -212,5 +283,6 @@ export const useFileTreeStore = create<FileTreeState>((set, get) => ({
     } else {
       await state.loadChildren(parentPath)
     }
+    useEditorStore.getState().handleFileDelete(itemPath)
   },
 }))

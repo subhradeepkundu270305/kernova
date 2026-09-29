@@ -23,13 +23,13 @@
   </a>
 </p>
 
-### 📥 1-Click Downloads (v0.2.1)
+### 📥 1-Click Downloads (v0.2.2)
 
 | OS | Format | Download | Quick Start |
 | :--- | :--- | :--- | :--- |
-| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.1.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/KERNOVA-0.2.1.AppImage) | `chmod +x KERNOVA-0.2.1.AppImage && ./KERNOVA-0.2.1.AppImage` |
-| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.1_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/kernova_0.2.1_amd64.deb) | `sudo dpkg -i kernova_0.2.1_amd64.deb` |
-| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.1-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.1/KERNOVA-0.2.1-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
+| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.2.2.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.2/KERNOVA-0.2.2.AppImage) | `chmod +x KERNOVA-0.2.2.AppImage && ./KERNOVA-0.2.2.AppImage` |
+| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.2.2_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.2/kernova_0.2.2_amd64.deb) | `sudo dpkg -i kernova_0.2.2_amd64.deb` |
+| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.2.2-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.2.2/KERNOVA-0.2.2-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
 
 ---
 
@@ -66,7 +66,8 @@ Whether you're coding on a plane, practicing Data Structures & Algorithms (DSA),
 
 ### 💻 3. Full-Fledged Engineering Workspace
 - **Offline Monaco Editor**: The battle-tested engine powering VS Code, pre-bundled with offline language grammar, syntax highlighting, and 6 custom themes (*Midnight*, *Aurora*, *Ember*, *Cyberpunk*, *Solaris*, *Abyss*), plus 7 selectable monospace font styles (*JetBrains Mono*, *Fira Code*, *Cascadia Code*, *Source Code Pro*, *Geist Mono*, *Inconsolata*, *Ubuntu Mono*).
-- **Filesystem Tree & CRUD**: Fast directory browsing, file/folder creation, rename, delete, duplicate, and system file-manager integration.
+- **Filesystem Tree & VS Code-Style Creation**: Dedicated toolbar buttons for New File, New Folder, Refresh, and Collapse All. Inline file and folder creation allows users to name items freely with autofocus and keyboard shortcuts (`Enter` to commit, `Esc` to cancel, `F2` to rename with basename auto-selection).
+- **Extension-Based Language Icons**: Full file icon system with authentic symbols and brand colors for Python (`.py`), C++ (`.cpp`), C (`.c`), JavaScript/TypeScript (`.js`/`.ts`/`.tsx`), HTML, CSS, JSON, Markdown, Rust, Go, Java, Shell, and more synchronized across the tree and open editor tabs.
 - **Tabbed Multi-File Editing**: Fast tab switching, unsaved change indicators, close-confirmation guards, and drag-and-drop reordering.
 - **Autosave by Default**: Background debounce saving (default 1000ms) with zero file-loss guarantee.
 - **Integrated Terminal Panel (`Ctrl+\``)**: Hardware-accelerated terminal powered by `@xterm/xterm` and `node-pty`, with multi-tab support and responsive resize handles.
