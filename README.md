@@ -29,7 +29,7 @@
 | :--- | :--- | :--- | :--- |
 | 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.1.0.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-0.1.0.AppImage) | `chmod +x KERNOVA-0.1.0.AppImage && ./KERNOVA-0.1.0.AppImage` |
 | 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.1.0_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/kernova_0.1.0_amd64.deb) | `sudo dpkg -i kernova_0.1.0_amd64.deb` |
-| 🪟 **Windows** | **Windows 10 / 11 Installer** | [**KERNOVA-Setup-0.1.0.exe**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-Setup-0.1.0.exe) | Run installer, launch from Start Menu or Desktop |
+| 🪟 **Windows** | **Windows 10 / 11 (64-bit)** | [**KERNOVA-0.1.0-windows-x64.zip**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-0.1.0-windows-x64.zip) | Unzip & double-click `KERNOVA.exe` |
 
 ---
 
