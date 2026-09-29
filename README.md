@@ -17,6 +17,20 @@
   <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/subhradeepkundu270305/kernova/releases/latest">
+    <img src="https://img.shields.io/github/v/release/subhradeepkundu270305/kernova?label=Latest%20Release&color=8B5CF6&style=for-the-badge" alt="Latest Release" />
+  </a>
+</p>
+
+### 📥 1-Click Downloads (v0.1.0)
+
+| OS | Format | Download | Quick Start |
+| :--- | :--- | :--- | :--- |
+| 🐧 **Linux** | **AppImage** (Universal) | [**KERNOVA-0.1.0.AppImage**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-0.1.0.AppImage) | `chmod +x KERNOVA-0.1.0.AppImage && ./KERNOVA-0.1.0.AppImage` |
+| 🐧 **Linux** | **Debian / Ubuntu / Zorin** | [**kernova_0.1.0_amd64.deb**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/kernova_0.1.0_amd64.deb) | `sudo dpkg -i kernova_0.1.0_amd64.deb` |
+| 🪟 **Windows** | **Windows 10 / 11 Installer** | [**KERNOVA-Setup-0.1.0.exe**](https://github.com/subhradeepkundu270305/kernova/releases/download/v0.1.0/KERNOVA-Setup-0.1.0.exe) | Run installer, launch from Start Menu or Desktop |
+
 ---
 
 ## ⚡ Overview
