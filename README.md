@@ -227,6 +227,15 @@ pnpm package:win     # Builds .exe into dist/
 
 ---
 
+## 🤝 Contributing
+
+We welcome contributions of all kinds from developers, designers, researchers, and writers! Whether you want to add a new neon theme, fix a bug, optimize memory usage on 8 GB RAM systems, or improve local AI model integrations:
+
+- Please review our comprehensive [**Contributing Guide (CONTRIBUTING.md)**](CONTRIBUTING.md) for complete instructions on our architecture, local setup, TypeScript standards, and Pull Request workflows.
+- Check out our [GitHub Issues](https://github.com/subhradeepkundu270305/kernova/issues) for open tasks, roadmap discussions, or bug reports.
+
+---
+
 ## 🔒 Privacy & Architecture Principles
 
 1. **Zero Mandatory Telemetry**: KERNOVA does not report home, does not collect analytics, and contains no tracking SDKs.
